@@ -1,0 +1,434 @@
+*** General ***
+
+owner    = sztx
+contact  = 85727637@qq.com
+mailhost = localhost
+sendmail = /usr/lib/sendmail
+# NOTE: do not put the Image Cache below cgi-bin
+# since all files under cgi-bin will be executed ... this is not
+# good for images.
+imgcache = /usr/local/smokeping/cache
+imgurl   = http://210.72.225.158/smokepingcache 
+datadir  = /usr/local/smokeping/data
+piddir  = /usr/local/smokeping/var
+cgiurl   = http://201.72.225.158//smokeping/smokeping.cgi
+#smokemail = /home/oetiker/checkouts/smokeping/trunk/software/etc/smokemail.dist
+smokemail=/usr/local/smokeping/etc/smokemail.dist
+#tmail = /home/oetiker/checkouts/smokeping/trunk/software/etc/tmail.dist
+tmail = /usr/local/smokeping/etc/tmail.dist
+# specify this to get syslog logging
+syslogfacility = local0
+# each probe is now run in its own process
+# disable this to revert to the old behaviour
+# concurrentprobes = no
+
+*** Alerts ***
+#to = alertee@address.somewhere
+to = admin@sztx.com
+#from = smokealert@company.xy
+from = smokeping@sztx.com 
+
++someloss
+type = loss
+# in percent
+pattern = >0%,*12*,>0%,*12*,>0%
+comment = loss 3 times  in a row
+
+*** Database ***
+
+step     = 60
+pings    = 5
+
+# consfn mrhb steps total
+
+AVERAGE  0.5   1  1008
+AVERAGE  0.5  12  4320
+    MIN  0.5  12  4320
+    MAX  0.5  12  4320
+AVERAGE  0.5 144   720
+    MAX  0.5 144   720
+    MIN  0.5 144   720
+
+*** Presentation ***
+
+#template = /home/oetiker/checkouts/smokeping/trunk/software/etc/basepage.html.dist
+
+template = /usr/local/smokeping/etc/basepage.html.dist
+
+charset = utf-8 
+
++ charts
+
+menu = Charts
+title = The most interesting destinations
+
+++ stddev
+sorter = StdDev(entries=>4)
+title = Top Standard Deviation
+menu = Std Deviation
+format = Standard Deviation %f
+
+++ max
+sorter = Max(entries=>5)
+title = Top Max Roundtrip Time
+menu = by Max
+format = Max Roundtrip Time %f seconds
+
+++ loss
+sorter = Loss(entries=>5)
+title = Top Packet Loss
+menu = Loss
+format = Packets Lost %f
+
+++ median
+sorter = Median(entries=>5)
+title = Top Median Roundtrip Time
+menu = by Median
+format = Median RTT %f seconds
+
++ overview 
+
+width = 600
+height = 50
+range = 10h
+
++ detail
+
+width = 600
+height = 200
+unison_tolerance = 2
+
+"Last 3 Hours"    3h
+"Last 30 Hours"   30h
+"Last 10 Days"    10d
+"Last 400 Days"   400d
+
+#+ hierarchies
+#++ owner
+#title = Host Owner
+#++ location
+#title = Location
+
+*** Probes ***
+
++ FPing
+
+#binary = /usr/sbin/fping
+binary = /usr/local/sbin/fping
+#*** Slaves ***
+# Slaves file all note
+#secrets=/usr/local/smokeping/etc/smokeping_secrets
+
+#+boomer
+#display_name=boomer
+#color=0000ff
+#++override
+
+#+slave2
+#display_name=another
+#color=00ff00
+*** Targets ***
+
+probe = FPing
+
+menu = Top
+title = Network Latency Grapher
+#remark = Welcome to the SmokePing website of xxx Company. \
+#         Here you will learn all about the latency of our network.
+remark = Welcome to the SmokePing websit of sztx Company.
+
++Test
+menu= Targets
+#parents = owner:/Test/James location:/
+title= Test
+
+++allUnicom
+menu = allUnicom
+title = 联通
+host = /Test/baodingUnicom /Test/beijingUnicom /Test/changchunUnicom /Test/chengduUnicom /Test/haerbingUnicom /Test/hefeiUnicom /Test/huhehaoteUnicom /Test/jinanUnicom /Test/liaochengUnicom /Test/shenyangUnicom /Test/taiyuanUnicom /Test/tianjinUnicom /Test/zhengzhouUnicom
+
+++allTelecom
+menu = allTelecom
+title = 电信
+host = /Test/changshaTelecom /Test/chengduTelecom /Test/fuzhouTelecom /Test/guangzhouTelecom /Test/guiyangTelecom /Test/haikouTelecom /Test/hangzhouTelecom /Test/hefeiTelecom /Test/kunmingTelecom /Test/lanzhouTelecom /Test/nanjingTelecom /Test/nanningTelecom /Test/shanghaiTelecom /Test/wuhangTelecom /Test/yinchuanTelecom /Test/chongqingTelecom
+
+++allMobiel
+menu = allMobiel
+title = 移动
+host = /Test/chinaMobile /Test/fuzhouMobile /Test/shenyangMobile /Test/taiyuanMobile
+
+++allEdu
+menu = allEdu
+title = 教育网
+host = /Test/fudanEdu /Test/huananligongEdu /Test/huananshifanEdu /Test/kejiwangEdu /Test/qinghuaEdu /Test/shanghaijiaodaEdu /Test/xianjiaodaEdu /Test/zhongshandaxueEdu
+
+###############Unicom#################
+
+++baodingUnicom
+menu = 保定联通
+title = 保定联通
+host = 221.192.237.1
+
+++beijingUnicom
+menu = 北京联通
+title = 北京联通
+host = 219.158.13.222
+
+++changchunUnicom
+menu = 长春联通
+title = 长春联通
+host = 218.62.26.196
+
+++chengduUnicom
+menu = 成都联通
+title = 成都联通
+host = 119.6.4.1
+
+++haerbingUnicom
+menu = 哈尔滨联通
+title = 哈尔滨联通
+host = 221.208.247.70
+
+++hefeiUnicom
+menu = 合肥联通
+title = 合肥联通
+host = 202.97.224.68
+
+++huhehaoteUnicom
+menu = 呼和浩特联通
+title = 呼和浩特联通
+host = 58.18.168.30
+
+++jinanUnicom
+menu = 济南联通
+title = 济南联通
+host = 60.217.241.147
+
+++liaochengUnicom
+menu = 聊城联通
+title = 聊城联通
+host = 221.2.195.97
+
+++shenyangUnicom
+menu = 沈阳联通
+title = 沈阳联通
+host = 202.107.35.66
+
+++taiyuanUnicom
+menu = 太原联通
+title = 太原联通
+host = 202.99.192.66
+
+++tianjinUnicom
+menu = 天津联通
+title = 天津联通
+host = 218.69.16.130
+
+++zhengzhouUnicom
+menu = 郑州联通
+title = 郑州联通
+host = 61.158.249.151
+
+################Telecom######################
+
+++changshaTelecom
+menu = 长沙电信
+title = 长沙电信
+host = 218.77.120.177
+
+++chengduTelecom
+menu = 成都电信
+title = 成都电信
+host = 125.64.38.82
+
+++fuzhouTelecom
+menu = 福州电信
+title = 福州电信
+host = 202.101.98.55
+
+++guangzhouTelecom
+menu = 广州电信
+title = 广州电信
+host = 116.22.252.1
+
+++guiyangTelecom
+menu = 贵阳电信
+title = 贵阳电信
+host = 202.98.198.65
+
+++haikouTelecom
+menu = 海口电信
+title = 海口电信
+host = 202.100.192.1
+
+++hangzhouTelecom
+menu = 杭州电信
+title = 杭州电信
+host = 202.96.103.36
+
+++hefeiTelecom
+menu = 合肥电信
+title = 合肥电信
+host = 220.178.12.115
+
+++kunmingTelecom
+menu = 昆明电信
+title = 昆明电信
+host = 222.221.1.26
+
+++lanzhouTelecom
+menu = 兰州电信
+title = 兰州电信
+host = 202.100.64.68
+
+++nanjingTelecom
+menu = 南京电信
+title = 南京电信
+host = 117.89.126.1
+
+++nanningTelecom
+menu = 南宁电信
+title = 南宁电信
+host = 202.103.224.75
+
+++shanghaiTelecom
+menu = 上海电信
+title = 上海电信
+host = 202.97.33.1 
+
+++wuhangTelecom
+menu = 武汉电信
+title = 武汉电信
+host = 111.175.227.118
+
+++yinchuanTelecom
+menu = 银川电信
+title = 银川电信
+host = 202.100.100.1
+
+++chongqingTelecom
+menu = 重庆电信
+title = 重庆电信
+host = 119.84.79.99
+
+#################### Mobile ################## 
+
+++chinaMobile
+menu = 中国移动
+title = 中国移动
+host = www.chinamobile.com
+
+++fuzhouMobile
+menu = 福州移动
+title = 福州移动
+host = 211.138.149.214
+
+++shenyangMobile
+menu = 沈阳移动
+title = 沈阳移动
+host = 211.140.249.115
+
+++taiyuanMobile
+menu = 太原移动
+title = 太原移动
+host = 211.142.26.10
+
+
+
+#################### Edu ################## 
+
+++fudanEdu
+menu = 复旦大学
+title = 复旦大学
+host = www.fudan.edu.cn
+
+++huananligongEdu
+menu = 华南理工
+title = 华南理工
+host = www.scut.edu.cn
+
+++huananshifanEdu
+menu = 华南师范
+title = 华南师范
+host = www.scnu.edu.cn
+
+++kejiwangEdu
+menu = 科技网
+title = 科技网
+host = 159.226.8.10
+
+++qinghuaEdu
+menu = 清华大学
+title = 清华大学
+host = 121.52.160.150
+
+++shanghaijiaodaEdu
+menu = 上海交大
+title = 上海交大
+host = www.sjtu.edu.cn
+
+++xianjiaodaEdu
+menu = 西安交大
+title = 西安交大
+host = 202.117.1.13
+
+++zhongshandaxueEdu
+menu = 中山大学
+title = 中山大学
+host = www.sysu.edu.cn
+
+
+
+############### Other ##################
+
+++eluosi
+menu = 俄罗斯
+title = 俄罗斯
+host = 212.5.89.21
+
+++eluosigoogle
+menu = 俄罗斯google
+title = 俄罗斯google
+host = 74.125.31.99
+
+++hanguo
+menu = 韩国
+title = 韩国
+host = 211.233.32.11
+
+++hanguomnet
+menu = 韩国mnet
+title = 韩国mnet
+host = 210.122.110.11
+
+++usa
+menu = 美国
+title = 美国
+host = 63.80.243.1
+
+++riben
+menu = 日本
+title = 日本
+host = 124.83.179.227
+
+++hk
+menu = 香港
+title = 香港
+host = 218.213.85.73
+
+++uk
+menu = 英国
+title = 英国
+host = 212.74.24.42
+
+++testhost1
+host = 122.112.67.1
+
+++testhost2
+host = 122.112.95.1
+#++ MultiHost
+
+#menu = Multihost
+#title = James and James as seen from Boomer
+#host = /Test/James /Test/James~boomer
+
