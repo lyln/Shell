@@ -8,10 +8,10 @@ sendmail = /usr/lib/sendmail
 # since all files under cgi-bin will be executed ... this is not
 # good for images.
 imgcache = /usr/local/smokeping/cache
-imgurl   = http://210.72.225.158/smokepingcache 
+imgurl   = http://ip/smokepingcache 
 datadir  = /usr/local/smokeping/data
 piddir  = /usr/local/smokeping/var
-cgiurl   = http://201.72.225.158//smokeping/smokeping.cgi
+cgiurl   = http://ip//smokeping/smokeping.cgi
 #smokemail = /home/oetiker/checkouts/smokeping/trunk/software/etc/smokemail.dist
 smokemail=/usr/local/smokeping/etc/smokemail.dist
 #tmail = /home/oetiker/checkouts/smokeping/trunk/software/etc/tmail.dist
