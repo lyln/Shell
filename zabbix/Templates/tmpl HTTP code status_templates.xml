@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>2.0</version>
-    <date>2015-07-07T02:44:49Z</date>
+    <date>2015-07-07T08:45:06Z</date>
     <groups>
         <group>
             <name>sevenga</name>
@@ -9,8 +9,8 @@
     </groups>
     <templates>
         <template>
-            <template>tmpl-Disk-IO</template>
-            <name>tmpl-Disk-IO</name>
+            <template>tmpl HTTP code status</template>
+            <name>tmpl HTTP code status</name>
             <groups>
                 <group>
                     <name>sevenga</name>
@@ -18,18 +18,62 @@
             </groups>
             <applications>
                 <application>
-                    <name>Disk IO</name>
+                    <name>HTTP code status</name>
                 </application>
             </applications>
-            <items/>
+            <items>
+                <item>
+                    <name>Total http code number in sevenga.access.log</name>
+                    <type>7</type>
+                    <snmp_community/>
+                    <multiplier>0</multiplier>
+                    <snmp_oid/>
+                    <key>http.code.total</key>
+                    <delay>30</delay>
+                    <history>90</history>
+                    <trends>365</trends>
+                    <status>0</status>
+                    <value_type>3</value_type>
+                    <allowed_hosts/>
+                    <units/>
+                    <delta>0</delta>
+                    <snmpv3_contextname/>
+                    <snmpv3_securityname/>
+                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                    <snmpv3_authpassphrase/>
+                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                    <snmpv3_privpassphrase/>
+                    <formula>1</formula>
+                    <delay_flex/>
+                    <params/>
+                    <ipmi_sensor/>
+                    <data_type>0</data_type>
+                    <authtype>0</authtype>
+                    <username/>
+                    <password/>
+                    <publickey/>
+                    <privatekey/>
+                    <port/>
+                    <description/>
+                    <inventory_link>0</inventory_link>
+                    <applications>
+                        <application>
+                            <name>HTTP code status</name>
+                        </application>
+                    </applications>
+                    <valuemap/>
+                    <logtimefmt/>
+                </item>
+            </items>
             <discovery_rules>
                 <discovery_rule>
-                    <name>Disk Discovery</name>
-                    <type>0</type>
+                    <name>HTTP code discovery</name>
+                    <type>7</type>
                     <snmp_community/>
                     <snmp_oid/>
-                    <key>disk.discovery</key>
-                    <delay>3600</delay>
+                    <key>http.code.discovery</key>
+                    <delay>30</delay>
                     <status>0</status>
                     <allowed_hosts/>
                     <snmpv3_contextname/>
@@ -48,147 +92,18 @@
                     <publickey/>
                     <privatekey/>
                     <port/>
-                    <filter>{#DISK_NAME}:</filter>
+                    <filter>{#CODESTATUS}:</filter>
                     <lifetime>30</lifetime>
-                    <description/>
+                    <description>监控日志HTTP的状态信息</description>
                     <item_prototypes>
                         <item_prototype>
-                            <name>Bandwidth utilization for {#DISK_NAME}</name>
-                            <type>0</type>
+                            <name>Interface $1 on $2 code sum number</name>
+                            <type>7</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
-                            <key>disk.status[{#DISK_NAME},util]</key>
-                            <delay>60</delay>
-                            <history>90</history>
-                            <trends>365</trends>
-                            <status>0</status>
-                            <value_type>0</value_type>
-                            <allowed_hosts/>
-                            <units>%</units>
-                            <delta>0</delta>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <formula>1</formula>
-                            <delay_flex/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <data_type>0</data_type>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description>Percentage of CPU time during which I/O requests were issued to the device (bandwidth utilization for the device). Device saturation occurs when this  value  is  close  to                100%.</description>
-                            <inventory_link>0</inventory_link>
-                            <applications>
-                                <application>
-                                    <name>Disk IO</name>
-                                </application>
-                            </applications>
-                            <valuemap/>
-                            <logtimefmt/>
-                        </item_prototype>
-                        <item_prototype>
-                            <name>Bytes read per second on {#DISK_NAME}</name>
-                            <type>0</type>
-                            <snmp_community/>
-                            <multiplier>1</multiplier>
-                            <snmp_oid/>
-                            <key>disk.status[{#DISK_NAME},rKBps]</key>
-                            <delay>60</delay>
-                            <history>90</history>
-                            <trends>365</trends>
-                            <status>0</status>
-                            <value_type>0</value_type>
-                            <allowed_hosts/>
-                            <units>B</units>
-                            <delta>0</delta>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <formula>1024</formula>
-                            <delay_flex/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <data_type>0</data_type>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description>The number of kilobytes read from the device per second.</description>
-                            <inventory_link>0</inventory_link>
-                            <applications>
-                                <application>
-                                    <name>Disk IO</name>
-                                </application>
-                            </applications>
-                            <valuemap/>
-                            <logtimefmt/>
-                        </item_prototype>
-                        <item_prototype>
-                            <name>Bytes written per second on {#DISK_NAME}</name>
-                            <type>0</type>
-                            <snmp_community/>
-                            <multiplier>1</multiplier>
-                            <snmp_oid/>
-                            <key>disk.status[{#DISK_NAME},wKBps]</key>
-                            <delay>60</delay>
-                            <history>90</history>
-                            <trends>365</trends>
-                            <status>0</status>
-                            <value_type>0</value_type>
-                            <allowed_hosts/>
-                            <units>B</units>
-                            <delta>0</delta>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <formula>1024</formula>
-                            <delay_flex/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <data_type>0</data_type>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description>The number of kilobytes written to the device per second.</description>
-                            <inventory_link>0</inventory_link>
-                            <applications>
-                                <application>
-                                    <name>Disk IO</name>
-                                </application>
-                            </applications>
-                            <valuemap/>
-                            <logtimefmt/>
-                        </item_prototype>
-                        <item_prototype>
-                            <name>I/O requests average time(miliseconds) issued to {#DISK_NAME}</name>
-                            <type>0</type>
-                            <snmp_community/>
-                            <multiplier>0</multiplier>
-                            <snmp_oid/>
-                            <key>disk.status[{#DISK_NAME},await]</key>
-                            <delay>60</delay>
+                            <key>http.code.num[pay_verified_order,{#CODESTATUS}]</key>
+                            <delay>30</delay>
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -214,24 +129,24 @@
                             <publickey/>
                             <privatekey/>
                             <port/>
-                            <description>The  average time (in milliseconds) for I/O requests issued to the device to be served.This includes the time spent by the requests in queue  and  the  time  spent  servicing them.</description>
+                            <description/>
                             <inventory_link>0</inventory_link>
                             <applications>
                                 <application>
-                                    <name>Disk IO</name>
+                                    <name>HTTP code status</name>
                                 </application>
                             </applications>
                             <valuemap/>
                             <logtimefmt/>
                         </item_prototype>
                         <item_prototype>
-                            <name>Read requests issued per second to {#DISK_NAME}</name>
-                            <type>0</type>
+                            <name>Interface $1 on $2 code sum number</name>
+                            <type>7</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
-                            <key>disk.status[{#DISK_NAME},rps]</key>
-                            <delay>60</delay>
+                            <key>http.code.num[pay_created_order,{#CODESTATUS}]</key>
+                            <delay>30</delay>
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -257,24 +172,24 @@
                             <publickey/>
                             <privatekey/>
                             <port/>
-                            <description>The number of read requests that were issued to the device per second.</description>
+                            <description/>
                             <inventory_link>0</inventory_link>
                             <applications>
                                 <application>
-                                    <name>Disk IO</name>
+                                    <name>HTTP code status</name>
                                 </application>
                             </applications>
                             <valuemap/>
                             <logtimefmt/>
                         </item_prototype>
                         <item_prototype>
-                            <name>Read requests merged per second on {#DISK_NAME}</name>
-                            <type>0</type>
+                            <name>Interface $1 on $2 code sum number</name>
+                            <type>7</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
-                            <key>disk.status[{#DISK_NAME},rrqm]</key>
-                            <delay>60</delay>
+                            <key>http.code.num[usercenter_user_register,{#CODESTATUS}]</key>
+                            <delay>30</delay>
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -300,24 +215,24 @@
                             <publickey/>
                             <privatekey/>
                             <port/>
-                            <description>The number of read requests merged per second that were queued to the device.</description>
+                            <description/>
                             <inventory_link>0</inventory_link>
                             <applications>
                                 <application>
-                                    <name>Disk IO</name>
+                                    <name>HTTP code status</name>
                                 </application>
                             </applications>
                             <valuemap/>
                             <logtimefmt/>
                         </item_prototype>
                         <item_prototype>
-                            <name>Requests average queue length issued to {#DISK_NAME}</name>
-                            <type>0</type>
+                            <name>Interface $1 on $2 code sum number</name>
+                            <type>7</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
-                            <key>disk.status[{#DISK_NAME},avgqu-sz]</key>
-                            <delay>60</delay>
+                            <key>http.code.num[login,{#CODESTATUS}]</key>
+                            <delay>30</delay>
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -343,24 +258,24 @@
                             <publickey/>
                             <privatekey/>
                             <port/>
-                            <description>The average queue length of the requests that were issued to the device.</description>
+                            <description/>
                             <inventory_link>0</inventory_link>
                             <applications>
                                 <application>
-                                    <name>Disk IO</name>
+                                    <name>HTTP code status</name>
                                 </application>
                             </applications>
                             <valuemap/>
                             <logtimefmt/>
                         </item_prototype>
                         <item_prototype>
-                            <name>Requests average size(sectors) issued to {#DISK_NAME}</name>
-                            <type>0</type>
+                            <name>Interface $1 on $2 code sum number</name>
+                            <type>7</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
-                            <key>disk.status[{#DISK_NAME},avgrq-sz]</key>
-                            <delay>60</delay>
+                            <key>http.code.num[login_with_token,{#CODESTATUS}]</key>
+                            <delay>30</delay>
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -386,24 +301,24 @@
                             <publickey/>
                             <privatekey/>
                             <port/>
-                            <description>The average size (in sectors) of the requests that were issued to the device.</description>
+                            <description/>
                             <inventory_link>0</inventory_link>
                             <applications>
                                 <application>
-                                    <name>Disk IO</name>
+                                    <name>HTTP code status</name>
                                 </application>
                             </applications>
                             <valuemap/>
                             <logtimefmt/>
                         </item_prototype>
                         <item_prototype>
-                            <name>Write requests issued per second to {#DISK_NAME}</name>
-                            <type>0</type>
+                            <name>Interface $1 on $2 code sum number</name>
+                            <type>7</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
-                            <key>disk.status[{#DISK_NAME},wps]</key>
-                            <delay>60</delay>
+                            <key>http.code.num[verify_order_alipay,{#CODESTATUS}]</key>
+                            <delay>30</delay>
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -429,24 +344,24 @@
                             <publickey/>
                             <privatekey/>
                             <port/>
-                            <description>The number of write requests that were issued to the device per second.</description>
+                            <description/>
                             <inventory_link>0</inventory_link>
                             <applications>
                                 <application>
-                                    <name>Disk IO</name>
+                                    <name>HTTP code status</name>
                                 </application>
                             </applications>
                             <valuemap/>
                             <logtimefmt/>
                         </item_prototype>
                         <item_prototype>
-                            <name>Write requests merged per second on {#DISK_NAME}</name>
-                            <type>0</type>
+                            <name>Interface $1 on $2 code sum number</name>
+                            <type>7</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
-                            <key>disk.status[{#DISK_NAME},wrqm]</key>
-                            <delay>60</delay>
+                            <key>http.code.num[guest_login,{#CODESTATUS}]</key>
+                            <delay>30</delay>
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -472,190 +387,105 @@
                             <publickey/>
                             <privatekey/>
                             <port/>
-                            <description>The number of write request merged per second that were queued to the device.</description>
+                            <description/>
                             <inventory_link>0</inventory_link>
                             <applications>
                                 <application>
-                                    <name>Disk IO</name>
+                                    <name>HTTP code status</name>
+                                </application>
+                            </applications>
+                            <valuemap/>
+                            <logtimefmt/>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Interface $1 on $2 code sum number</name>
+                            <type>7</type>
+                            <snmp_community/>
+                            <multiplier>0</multiplier>
+                            <snmp_oid/>
+                            <key>http.code.num[guest_upgrade,{#CODESTATUS}]</key>
+                            <delay>30</delay>
+                            <history>90</history>
+                            <trends>365</trends>
+                            <status>0</status>
+                            <value_type>0</value_type>
+                            <allowed_hosts/>
+                            <units/>
+                            <delta>0</delta>
+                            <snmpv3_contextname/>
+                            <snmpv3_securityname/>
+                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                            <snmpv3_authpassphrase/>
+                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                            <snmpv3_privpassphrase/>
+                            <formula>1</formula>
+                            <delay_flex/>
+                            <params/>
+                            <ipmi_sensor/>
+                            <data_type>0</data_type>
+                            <authtype>0</authtype>
+                            <username/>
+                            <password/>
+                            <publickey/>
+                            <privatekey/>
+                            <port/>
+                            <description/>
+                            <inventory_link>0</inventory_link>
+                            <applications>
+                                <application>
+                                    <name>HTTP code status</name>
+                                </application>
+                            </applications>
+                            <valuemap/>
+                            <logtimefmt/>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Interface $1 on $2 code sum number</name>
+                            <type>7</type>
+                            <snmp_community/>
+                            <multiplier>0</multiplier>
+                            <snmp_oid/>
+                            <key>http.code.num[check_user,{#CODESTATUS}]</key>
+                            <delay>30</delay>
+                            <history>90</history>
+                            <trends>365</trends>
+                            <status>0</status>
+                            <value_type>0</value_type>
+                            <allowed_hosts/>
+                            <units/>
+                            <delta>0</delta>
+                            <snmpv3_contextname/>
+                            <snmpv3_securityname/>
+                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                            <snmpv3_authpassphrase/>
+                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                            <snmpv3_privpassphrase/>
+                            <formula>1</formula>
+                            <delay_flex/>
+                            <params/>
+                            <ipmi_sensor/>
+                            <data_type>0</data_type>
+                            <authtype>0</authtype>
+                            <username/>
+                            <password/>
+                            <publickey/>
+                            <privatekey/>
+                            <port/>
+                            <description/>
+                            <inventory_link>0</inventory_link>
+                            <applications>
+                                <application>
+                                    <name>HTTP code status</name>
                                 </application>
                             </applications>
                             <valuemap/>
                             <logtimefmt/>
                         </item_prototype>
                     </item_prototypes>
-                    <trigger_prototypes>
-                        <trigger_prototype>
-                            <expression>{tmpl-Disk-IO:disk.status[{#DISK_NAME},util].last()}&gt;90</expression>
-                            <name>High disk io {#DISK_NAME} on {HOSTNAME}</name>
-                            <url/>
-                            <status>1</status>
-                            <priority>4</priority>
-                            <description/>
-                            <type>0</type>
-                        </trigger_prototype>
-                    </trigger_prototypes>
-                    <graph_prototypes>
-                        <graph_prototype>
-                            <name>Disk IO await/util on {#DISK_NAME}</name>
-                            <width>900</width>
-                            <height>200</height>
-                            <yaxismin>0.0000</yaxismin>
-                            <yaxismax>100.0000</yaxismax>
-                            <show_work_period>1</show_work_period>
-                            <show_triggers>1</show_triggers>
-                            <type>0</type>
-                            <show_legend>1</show_legend>
-                            <show_3d>0</show_3d>
-                            <percent_left>0.0000</percent_left>
-                            <percent_right>0.0000</percent_right>
-                            <ymin_type_1>0</ymin_type_1>
-                            <ymax_type_1>0</ymax_type_1>
-                            <ymin_item_1>0</ymin_item_1>
-                            <ymax_item_1>0</ymax_item_1>
-                            <graph_items>
-                                <graph_item>
-                                    <sortorder>0</sortorder>
-                                    <drawtype>2</drawtype>
-                                    <color>00C800</color>
-                                    <yaxisside>0</yaxisside>
-                                    <calc_fnc>2</calc_fnc>
-                                    <type>0</type>
-                                    <item>
-                                        <host>tmpl-Disk-IO</host>
-                                        <key>disk.status[{#DISK_NAME},await]</key>
-                                    </item>
-                                </graph_item>
-                                <graph_item>
-                                    <sortorder>1</sortorder>
-                                    <drawtype>2</drawtype>
-                                    <color>0000C8</color>
-                                    <yaxisside>0</yaxisside>
-                                    <calc_fnc>2</calc_fnc>
-                                    <type>0</type>
-                                    <item>
-                                        <host>tmpl-Disk-IO</host>
-                                        <key>disk.status[{#DISK_NAME},util]</key>
-                                    </item>
-                                </graph_item>
-                            </graph_items>
-                        </graph_prototype>
-                        <graph_prototype>
-                            <name>Disk  Reads/Writes on {#DISK_NAME}</name>
-                            <width>900</width>
-                            <height>200</height>
-                            <yaxismin>0.0000</yaxismin>
-                            <yaxismax>100.0000</yaxismax>
-                            <show_work_period>1</show_work_period>
-                            <show_triggers>1</show_triggers>
-                            <type>0</type>
-                            <show_legend>1</show_legend>
-                            <show_3d>0</show_3d>
-                            <percent_left>0.0000</percent_left>
-                            <percent_right>0.0000</percent_right>
-                            <ymin_type_1>0</ymin_type_1>
-                            <ymax_type_1>0</ymax_type_1>
-                            <ymin_item_1>0</ymin_item_1>
-                            <ymax_item_1>0</ymax_item_1>
-                            <graph_items>
-                                <graph_item>
-                                    <sortorder>0</sortorder>
-                                    <drawtype>2</drawtype>
-                                    <color>009600</color>
-                                    <yaxisside>0</yaxisside>
-                                    <calc_fnc>2</calc_fnc>
-                                    <type>0</type>
-                                    <item>
-                                        <host>tmpl-Disk-IO</host>
-                                        <key>disk.status[{#DISK_NAME},rKBps]</key>
-                                    </item>
-                                </graph_item>
-                                <graph_item>
-                                    <sortorder>1</sortorder>
-                                    <drawtype>2</drawtype>
-                                    <color>000096</color>
-                                    <yaxisside>0</yaxisside>
-                                    <calc_fnc>2</calc_fnc>
-                                    <type>0</type>
-                                    <item>
-                                        <host>tmpl-Disk-IO</host>
-                                        <key>disk.status[{#DISK_NAME},wKBps]</key>
-                                    </item>
-                                </graph_item>
-                                <graph_item>
-                                    <sortorder>2</sortorder>
-                                    <drawtype>2</drawtype>
-                                    <color>960096</color>
-                                    <yaxisside>0</yaxisside>
-                                    <calc_fnc>2</calc_fnc>
-                                    <type>0</type>
-                                    <item>
-                                        <host>tmpl-Disk-IO</host>
-                                        <key>disk.status[{#DISK_NAME},rps]</key>
-                                    </item>
-                                </graph_item>
-                                <graph_item>
-                                    <sortorder>3</sortorder>
-                                    <drawtype>2</drawtype>
-                                    <color>009696</color>
-                                    <yaxisside>0</yaxisside>
-                                    <calc_fnc>2</calc_fnc>
-                                    <type>0</type>
-                                    <item>
-                                        <host>tmpl-Disk-IO</host>
-                                        <key>disk.status[{#DISK_NAME},wps]</key>
-                                    </item>
-                                </graph_item>
-                                <graph_item>
-                                    <sortorder>4</sortorder>
-                                    <drawtype>2</drawtype>
-                                    <color>969600</color>
-                                    <yaxisside>0</yaxisside>
-                                    <calc_fnc>2</calc_fnc>
-                                    <type>0</type>
-                                    <item>
-                                        <host>tmpl-Disk-IO</host>
-                                        <key>disk.status[{#DISK_NAME},rrqm]</key>
-                                    </item>
-                                </graph_item>
-                                <graph_item>
-                                    <sortorder>5</sortorder>
-                                    <drawtype>2</drawtype>
-                                    <color>969696</color>
-                                    <yaxisside>0</yaxisside>
-                                    <calc_fnc>2</calc_fnc>
-                                    <type>0</type>
-                                    <item>
-                                        <host>tmpl-Disk-IO</host>
-                                        <key>disk.status[{#DISK_NAME},wrqm]</key>
-                                    </item>
-                                </graph_item>
-                                <graph_item>
-                                    <sortorder>6</sortorder>
-                                    <drawtype>2</drawtype>
-                                    <color>FF0000</color>
-                                    <yaxisside>0</yaxisside>
-                                    <calc_fnc>2</calc_fnc>
-                                    <type>0</type>
-                                    <item>
-                                        <host>tmpl-Disk-IO</host>
-                                        <key>disk.status[{#DISK_NAME},avgqu-sz]</key>
-                                    </item>
-                                </graph_item>
-                                <graph_item>
-                                    <sortorder>7</sortorder>
-                                    <drawtype>2</drawtype>
-                                    <color>00FF00</color>
-                                    <yaxisside>0</yaxisside>
-                                    <calc_fnc>2</calc_fnc>
-                                    <type>0</type>
-                                    <item>
-                                        <host>tmpl-Disk-IO</host>
-                                        <key>disk.status[{#DISK_NAME},avgrq-sz]</key>
-                                    </item>
-                                </graph_item>
-                            </graph_items>
-                        </graph_prototype>
-                    </graph_prototypes>
+                    <trigger_prototypes/>
+                    <graph_prototypes/>
                     <host_prototypes/>
                 </discovery_rule>
             </discovery_rules>

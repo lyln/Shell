@@ -1,6 +1,6 @@
 #!/bin/bash
 #function: monitor nginx from zabbix
-#mail: lijd@sevenga.com
+#mail: ljdevops@gmail.com
 #version: v0.1
 
 #IP=`ifconfig eth1|grep "inet" |awk  '{print $2}'`

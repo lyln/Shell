@@ -1,5 +1,5 @@
 #!/bin/bash
-logname='/data/log/nginx/sevenga.access.log'
+logname='/data/log/nginx/xxx.access.log'
 
 #1 is ok
 status=`tail $logname |grep $1|awk '{print $9}'|uniq  `

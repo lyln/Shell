@@ -1,5 +1,5 @@
 #!/bin/bash
-logname='/data/log/nginx/sevenga.access.log'
+logname='/data/log/nginx/xxx.access.log'
 total=`sudo cat $logname|wc -l`
 array=(`sudo cat $logname|grep "$1"| awk '{print $9}'|sort|uniq -c |sort -n|grep $2`)
 len=${#array[@]}
