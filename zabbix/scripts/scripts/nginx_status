@@ -1,0 +1,62 @@
+#!/bin/bash
+#function: monitor nginx from zabbix
+#mail: lijd@sevenga.com
+#version: v0.1
+
+#IP=`ifconfig eth1|grep "inet" |awk  '{print $2}'`
+IP=`ifconfig eth1 |awk '/inet/ {print $2}'|awk -F: '{print $2}'`
+PORT="80"
+
+function active {
+        /usr/bin/curl "http://$IP/nginx_status" 2>/dev/null |awk '/Active/ {print $3}'
+}
+
+function reading {
+        /usr/bin/curl "http://$IP/nginx_status" 2>/dev/null |awk '/Reading/ {print $2}'
+}
+
+function writing {
+        /usr/bin/curl "http://$IP/nginx_status" 2>/dev/null |awk '/Writing/ {print $4}'
+}
+
+function waiting {
+        /usr/bin/curl "http://$IP/nginx_status" 2>/dev/null |awk '/Waiting/ {print $6}'
+}
+
+function accepts {
+        /usr/bin/curl "http://$IP/nginx_status" 2>/dev/null |awk NR==3 |awk '{print $1}'
+}
+
+function handled {
+        /usr/bin/curl "http://$IP/nginx_status" 2>/dev/null |awk NR==3 |awk '{print $2}'
+}
+
+function requests {
+        /usr/bin/curl "http://$IP/nginx_status" 2>/dev/null |awk NR==3 |awk '{print $3}'
+}
+
+case "$1" in 
+        active)
+              active
+        ;;
+        reading)
+              reading
+        ;;
+        writing)
+              writing
+        ;;
+        waiting)
+              waiting
+        ;;
+        accepts)
+              accepts
+        ;;
+        handled)
+              handled
+        ;;
+        requests)
+              requests
+        ;;
+        *)
+        echo "Usage: $0 {active|reading|writing|waiting|accepts|handled|requests}"
+esac

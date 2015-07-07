@@ -1,0 +1,6 @@
+#!/bin/bash
+# IP=`ifconfig eth1 |awk -F: '/inet/ {print $2}'|awk '{print $1}'` 
+ IP=127.0.0.1
+ item=$1
+ PORT=$2
+ (echo "stats";sleep 0.5) | telnet $IP $PORT 2>/dev/null | grep "STAT $item\b" | awk '{print $3}'

@@ -1,0 +1,12 @@
+#!/bin/bash
+logname='/data/log/nginx/sevenga.access.log'
+
+#1 is ok
+status=`tail $logname |grep $1|awk '{print $9}'|uniq  `
+if [ "$status" = "" ]|| [ "$status" = "200" ]
+then
+ 	flag=1
+else
+	flag=0
+fi
+echo $flag

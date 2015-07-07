@@ -1,0 +1,6 @@
+#!/bin/bash
+METRIC="$1"
+HOSTNAME=127.0.0.1
+PORT="${2:-6379}"
+#PORT=$2
+(printf "INFO\r\n"; sleep 1;)|nc $HOSTNAME $PORT |awk  -F ':|,' '/'"${METRIC}"':/ {print $2}'|sed "s/[^0-9]//g"

@@ -1,0 +1,89 @@
+#!/bin/bash
+source /etc/bashrc > /dev/null 2>&1
+source /etc/profile > /dev/null 2>&1
+
+#IP=`ifconfig eth1|grep "inet" |awk  '{print $2}'`
+IP=`ifconfig eth1 |awk '/inet/ {print $2}'|awk -F: '{print $2}'`
+
+#curl -s http://$IP/phpfpmstatus 
+
+function start_since {
+        curl -s http://$IP/phpfpmstatus |awk '/start since:/ {print $NF}' 
+}
+
+function accepted_conn {
+        curl -s http://$IP/phpfpmstatus |awk '/accepted conn:/ {print $NF}' 
+}
+
+function listen_queue {
+        curl -s http://$IP/phpfpmstatus |awk '/^listen queue:/ {print $NF}' 
+}
+
+function max_listen_queue {
+        curl -s http://$IP/phpfpmstatus |awk '/^max listen queue:/ {print $NF}' 
+}
+
+function listen_queue_len {
+        curl -s http://$IP/phpfpmstatus |awk '/^listen queue len:/ {print $NF}'
+}
+
+function idle_processes {
+        curl -s http://$IP/phpfpmstatus |awk '/idle processes:/ {print $NF}' 
+}
+
+function active_processes {
+        curl -s http://$IP/phpfpmstatus |awk '/^active processes:/ {print $NF}' 
+}
+
+function total_processes {
+        curl -s http://$IP/phpfpmstatus |awk '/total processes:/ {print $NF}' 
+}
+
+function max_active_processes {
+        curl -s http://$IP/phpfpmstatus |awk '/^max active processes:/ {print $NF}' 
+}
+
+function max_children_reached {
+        curl -s http://$IP/phpfpmstatus |awk '/max children reached:/ {print $NF}' 
+}
+
+function slow_requests {
+        curl -s http://$IP/phpfpmstatus |awk '/slow requests:/ {print $NF}' 
+}
+case "$1" in 
+        start_since)
+              start_since
+        ;;
+        accepted_conn)
+              accepted_conn
+        ;;
+        listen_queue)
+              listen_queue
+        ;;
+        max_listen_queue)
+              max_listen_queue
+        ;;
+        listen_queue_len)
+              listen_queue_len
+        ;;
+        idle_processes)
+              idle_processes
+        ;;
+        active_processes)
+              active_processes
+        ;;
+        total_processes)
+              total_processes 
+        ;;
+        max_active_processes)
+              max_active_processes
+        ;;
+        max_children_reached)
+              max_children_reached
+        ;;
+        slow_requests)
+              slow_requests
+        ;;
+        *)
+        echo "Usage: $0 {start_since|accepted_conn|listen_queue|max_listen_queue|listen_queue_len|active_processes|idle_processes|total_processes|max_active_processes|max_children_reached|slow_requests}"
+esac

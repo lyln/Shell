@@ -1,0 +1,3 @@
+api/stats/pay_verified_order
+api/stats/pay_created_order
+api/stats/usercenter_user_register
