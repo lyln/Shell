@@ -1,0 +1,33 @@
+IPV6 ((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?
+IPV4 (?<![0-9])(?:(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[.](?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[.](?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[.](?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2}))(?![0-9])
+IP (?:%{IPV6}|%{IPV4})
+
+TIMESTAMP \d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2},\d{3}
+MYWORD \w+
+ANYWORD .+
+#URL [a-zA-z]+://[^\s]*
+URL [a-zA-z]+://[^\s]*flv
+INT (?:[+-]?(?:[0-9]+))
+NOTSPACE \S+
+ID -?[1-9]\d{7,}
+
+#access
+ACCESS %{ANYWORD}\[%{TIMESTAMP:log_timestamp}\]%{ANYWORD} \[%{NOTSPACE:exec_id}\] \[%{NOTSPACE:info_from}\] \| REQUEST:%{ANYWORD:request_url}\|%{IP:request_ip}\|%{ANYWORD}\\\"deviceId\\\":\\\"%{MYWORD:deviceId}\\\",%{ANYWORD}\\\"userId\\\":\\\"%{ID:user_id}\\\"%{ANYWORD}\|%{ANYWORD}\|%{MYWORD:request_method}\|%{INT:request_time}
+ACCESS1 %{ANYWORD}\[%{TIMESTAMP:log_timestamp}\]%{ANYWORD} \[%{NOTSPACE:exec_id}\] \[%{NOTSPACE:info_from}\] \| REQUEST:%{ANYWORD:request_url}\|%{IP:request_ip}\|%{ANYWORD}\\\"deviceId\\\":\\\"%{MYWORD:deviceId}\\\",%{ANYWORD}\\\"\loginName\\":\\\"%{MYWORD:loginName}\\\"%{ANYWORD}\|%{ANYWORD}\|%{MYWORD:request_method}\|%{INT:request_time}
+
+#online_user
+ONLINE_USER %{ANYWORD}\[%{TIMESTAMP:log_timestamp}\]%{ANYWORD} \[%{NOTSPACE:exec_id}\] \[%{NOTSPACE:info_from}\] \| Room Id: %{ID:room_id} \| User Number: %{INT:user_number}
+
+#total_user
+TOTAL_USER %{ANYWORD}\[%{TIMESTAMP:log_timestamp}\]%{ANYWORD} \[%{NOTSPACE:exec_id}\] \[%{NOTSPACE:info_from}\] \| Total User Number: %{INT:total_user}
+
+#stream
+#STREAM %{ANYWORD}\[%{TIMESTAMP:log_timestamp}\]%{ANYWORD} \[%{NOTSPACE:exec_id}\] \[%{NOTSPACE:info_from}\] \| Stream Status: \| {\\\"userId\\\":%{ID:userId},\\\"deviceId\\\":\\\"%{MYWORD:deviceId}\\\",\\\"uuid\\\":\\\"%{ANYWORD:uuid}\\\",\\\"%{ANYWORD}\\\"version\\\":\\\"%{ANYWORD:version}\\\",\\\"%{ANYWORD}\\\"StreamStatus \[url=%{URL:url}, snapoff=%{MYWORD:snapoff},nettype = %{ANYWORD:nettype},timedelay=%{MYWORD:timedelay},%{ANYWORD}error=%{ANYWORD:error}]\\\"} \| %{IP:IpFromStream}
+
+#STREAMTMP %{ANYWORD}\[%{TIMESTAMP:log_timestamp}\]%{ANYWORD} \[%{NOTSPACE:exec_id}\] \[%{NOTSPACE:info_from}\] \| Stream Status: \|%{ANYWORD}{\"userId\":%{ID:userId},\"deviceId\":\"%{MYWORD:deviceId}\",\"uuid\":\"%{ANYWORD:uuid}\",%{ANYWORD}\"version\":\"%{ANYWORD:version}\",\"message\":\"StreamStatus \[url=%{URL:url},snapoff=%{MYWORD:snapoff},nettype=%{ANYWORD:nettype},timedelay=%{MYWORD:timedelay},%{ANYWORD},error=%{ANYWORD:error}]\"} | %{IP:IpFromStream}
+
+#STREAMKS %{ANYWORD}\[%{TIMESTAMP:log_timestamp}\]%{ANYWORD} \[%{NOTSPACE:exec_id}\] \[%{NOTSPACE:info_from}\] \| Stream Status: \|%{ANYWORD}{\\\"userId\\\":%{ID:userId},\\\"deviceId\\\":\\\"%{MYWORD:deviceId}\\\",\\\"uuid\\\":\\\"%{ANYWORD:uuid}\\\",%{ANYWORD}\\\"version\\\":\\\"%{ANYWORD:version}\\\",\\\"message\\\":\\\"StreamStatus \[type=%{MYWORD:stream_type},url=%{URL:url},roomID=%{ID:room_id},isStream=%{MYWORD:is_stream},error=%{ANYWORD:error},startTime=%{INT:start_time},nettype=%{ANYWORD:nettype},snapoff=%{INT:snapoff},snapoffTime=%{INT:snapoff_time},timedelay=%{INT:timedelay}]\\\"} \| %{IP:IpFromStream}
+#STREAMGS %{ANYWORD}\[%{TIMESTAMP:log_timestamp}\]%{ANYWORD} \[%{NOTSPACE:exec_id}\] \[%{NOTSPACE:info_from}\] \| Stream Status: \|%{ANYWORD}{\\\"userId\\\":%{ID:userId},\\\"deviceId\\\":\\\"%{MYWORD:deviceId}\\\",\\\"uuid\\\":\\\"%{ANYWORD:uuid}\\\",%{ANYWORD}\\\"version\\\":\\\"%{ANYWORD:version}\\\",\\\"message\\\":\\\"StreamStatus \[type=%{MYWORD:stream_type},url=%{URL:url}%{ANYWORD},roomID=%{ID:room_id},isStream=%{MYWORD:is_stream},error=%{ANYWORD:error},startTime=%{INT:start_time},nettype=%{ANYWORD:nettype},snapoff=%{INT:snapoff},snapoffTime=%{INT:snapoff_time},timedelay=%{INT:timedelay}]\\\"} \| %{IP:IpFromStream}
+
+STREAMKS %{ANYWORD}\[%{TIMESTAMP:log_timestamp}\]%{ANYWORD} \[%{NOTSPACE:exec_id}\] \[%{NOTSPACE:info_from}\] \| Stream Status: \|%{ANYWORD}{\\\"userId\\\":%{ID:userId},\\\"deviceId\\\":\\\"%{MYWORD:deviceId}\\\",\\\"uuid\\\":\\\"%{ANYWORD:uuid}\\\",%{ANYWORD}\\\"version\\\":\\\"%{ANYWORD:version}\\\",\\\"channel\\\":\\\"%{ANYWORD:channel}\\\",\\\"message\\\":\\\"StreamStatus \[type=%{MYWORD:stream_type},url=%{URL:url},roomID=%{ID:room_id},isStream=%{MYWORD:is_stream},error=%{ANYWORD:error},startTime=%{INT:start_time},nettype=%{ANYWORD:nettype},snapoff=%{INT:snapoff},snapoffTime=%{INT:snapoff_time},timedelay=%{INT:timedelay}]\\\"} \| %{IP:IpFromStream}
+STREAMGS %{ANYWORD}\[%{TIMESTAMP:log_timestamp}\]%{ANYWORD} \[%{NOTSPACE:exec_id}\] \[%{NOTSPACE:info_from}\] \| Stream Status: \|%{ANYWORD}{\\\"userId\\\":%{ID:userId},\\\"deviceId\\\":\\\"%{MYWORD:deviceId}\\\",\\\"uuid\\\":\\\"%{ANYWORD:uuid}\\\",%{ANYWORD}\\\"version\\\":\\\"%{ANYWORD:version}\\\",\\\"channel\\\":\\\"%{ANYWORD:channel}\\\",\\\"message\\\":\\\"StreamStatus \[type=%{MYWORD:stream_type},url=%{URL:url}%{ANYWORD},roomID=%{ID:room_id},isStream=%{MYWORD:is_stream},error=%{ANYWORD:error},startTime=%{INT:start_time},nettype=%{ANYWORD:nettype},snapoff=%{INT:snapoff},snapoffTime=%{INT:snapoff_time},timedelay=%{INT:timedelay}]\\\"} \| %{IP:IpFromStream}
