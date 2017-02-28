@@ -1,0 +1,21 @@
+- hosts: java
+  remote_user: cam
+  become: yes
+  tasks:
+    - name: installing repo for Java 8 in Ubuntu
+      apt_repository: repo='ppa:openjdk-r/ppa'
+
+- hosts: java
+  remote_user: cam
+  become: yes
+  roles:
+    - role: geerlingguy.java
+      when: "ansible_os_family == 'Debian'"
+      java_packages: openjdk-8-jdk
+
+- hosts: java
+  remote_user: cam
+  become: yes
+  tasks:
+    - name: correct java version selected
+      alternatives: name=java path=/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java            

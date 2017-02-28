@@ -1,0 +1,6 @@
+- hosts: xhxcs
+  remote_user: root
+  become: yes
+  roles:
+    - role: jeqo.nginx
+      when: "ansible_os_family == 'Debian'"

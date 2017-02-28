@@ -1,0 +1,5 @@
+- src: https://github.com/silpion/ansible-util
+  name: silpion.util
+
+- src: https://github.com/silpion/ansible-tomcat
+  name: ansible-tomcat  

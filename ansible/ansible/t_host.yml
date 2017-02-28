@@ -1,0 +1,5 @@
+---
+ - hosts: mytest
+   tasks:
+   - name: copy custom template
+     template: src=templates/test.j2 dest=/tmp/t_host.txt 

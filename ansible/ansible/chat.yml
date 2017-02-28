@@ -1,0 +1,26 @@
+---
+- hosts: chat
+  tasks: 
+    - name: update chat1 config
+      local_action: shell /opt/deploy/config/update_chat.sh
+      run_once: true
+
+    - name: deploy code to remote chat1
+      local_action: shell /opt/deploy/chat1.sh
+      run_once: true
+      notify: 
+        - restart chat1
+
+    - name: deploy code to remote chat2
+      local_action: shell /opt/deploy/chat2.sh
+      run_once: true
+      notify: 
+        - restart chat2
+
+  handlers:
+    - name: restart chat1
+      shell: supervisorctl restart showchat
+      delegate_to: 10.254.138.105
+    - name: restart chat2
+      shell: supervisorctl restart showchat
+      delegate_to: 10.254.206.137

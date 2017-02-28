@@ -1,0 +1,22 @@
+- hosts: tomcat
+  remote_user: cam
+  become: yes
+  tasks:
+    - file: path={/etc/ansible/facts.d/ owner=root group=root state=directory
+    - template: src=java.fact dest=/etc/ansible/facts.d/java.fact
+
+- hosts: tomcat
+  remote_user: cam
+  become: yes
+  vars:
+    lib_roles_path: /etc/ansible/roles
+    tomcat_instances:
+      - name: camvr
+        service_name: tomcat-camvr
+        service_file: tomcat-camvr.conf
+        port_ajp: 18009
+        port_connector: 18080
+        port_redirect: 18443
+        port_shutdown: 18005        
+  roles:
+    - { role: ansible-tomcat }

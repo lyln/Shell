@@ -1,0 +1,19 @@
+- hosts: mt_all
+  remote_user: ubuntu
+  sudo: yes
+
+  roles:
+    - role: cchurch.admin-users
+      admin_users:
+        - username: rgbvr
+          fullname: "Joe Doe"
+          pubkey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD0rv9RG6IG2f5Ej5uLcyv9EEPP58UqsKVR9qoMTaq7Vzi5+kjgS3wUpqzCy1vf65qebo9YrZiaKNz2pyVAIR3qZCo3eAnqMaLl4BXk9bNlbheqsiuDXlJA+B6aXbcR01s6rOo7jXJF/EZ00T8kezyNS9sH7l7zauwD4tf+FCMjOxGQ/iAu1RL92KMhiYiKW9wR/T1KTgoK26drSXtxP6xEC4oE71y2up+vYBq+hTkXZYr7EPymmfNWLHGFFP8xrd//5/oez2g5Z9EEIMnpLLkErdb9+kTRaD/8Yv6kB+xa+sqfCHYacbUpwC6zMXPH7+osJ5ovlcuo73luIDAZ+AqL root@120.92.5.245"
+      admin_users_sudo_nopasswd: true
+
+#     # created with: on ubuntu
+#     # python -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
+# - hosts: all-users
+#   sudo: yes
+#   user: ubuntu
+#   tasks:
+#     - user: name=castle password=$1$SomeSalt$SiFWaVUs1AAgeLZmI9M2w0

@@ -1,0 +1,25 @@
+---
+- hosts: mt-server
+  tasks:
+  - name: update apt
+    apt: update_cache=yes force=yes
+
+  - name: copy latest stable jdk
+    copy: src=/data/soft/jdk-8u20-linux-x64.tar.gz  dest=/tmp/jdk-8u20-linux-x64.tar.gz 
+
+  - name: untar jdk
+    command: tar zxf /tmp/jdk-8u20-linux-x64.tar.gz -C /usr/local
+
+  - name: add link
+    command: ln -s /usr/local/jdk1.8.0_20 jdk chdir=/usr/local
+
+  - name: copy porfile to /etc/profile
+    copy: src=templates/profile dest=/etc/profile
+
+  - name: source /etc/profile
+    shell: . /etc/profile
+
+  - name: cleaning up source files
+    command: rm -rf /tmp/{{ item }}
+    with_items:
+      - jdk-8u20-linux-x64.tar.gz

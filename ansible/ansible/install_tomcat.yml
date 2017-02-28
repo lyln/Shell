@@ -1,0 +1,35 @@
+---
+- hosts: 198.11.173.202
+  vars:
+    tomcat_version: apache-tomcat-8.0.36.tar.gz
+    tomcat_path: /data/apache-tomcat-8.0.36
+  tasks:
+#  - name: update apt
+#    apt: update_cache=yes
+
+  - name: copy latest stable tomcat
+    copy: src=/data/soft/{{ tomcat_version }}  dest=/tmp/{{ tomcat_version }}
+
+  - name: untar tomcat-version.tar.gz
+    command: tar zxf /tmp/{{ tomcat_version }} -C /data
+
+  - name: add link
+    file: src={{ tomcat_path }} path=/data/tomcat state=link
+
+  - name: cleaning up source files
+    command: rm -rf /tmp/{{ tomcat_version }}
+
+  - name: cleaning up tomcat files
+    command: rm -rf {{ tomcat_path }}/{{ item }}
+    with_items:
+      - webapps/ROOT
+      - webapps/docs
+      - webapps/manager
+      - webapps/host-manager
+      - webapps/examples
+
+  - name: Install Tomcat init script
+    copy: src=tomcat-initscript.sh dest=/etc/init.d/tomcat mode=0755
+
+  - name: make sure tomcat start
+    service: name=tomcat state=started enabled=yes

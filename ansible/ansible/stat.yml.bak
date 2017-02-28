@@ -1,0 +1,46 @@
+---
+- hosts: status
+  vars:
+    project_name: ['showserver','showms']
+    host_ip: ['status1','status2']
+  remote_user: root
+  tasks: 
+    - name: update showserver config
+      local_action: shell /opt/deploy/config/update_showserver.sh
+      run_once: true
+
+    - name: update showms config
+      local_action: shell /opt/deploy/config/update_showms.sh
+      run_once: true
+
+    - name: deploy showserver code to remote stat1
+      local_action: shell '/opt/deploy/server_ms.sh' {{ project_name[0] }} {{ host_ip[0] }}
+      run_once: true
+
+    - name: deploy showserver code to remote stat1
+      local_action: shell '/opt/deploy/server_ms.sh' {{ project_name[1] }} {{ host_ip[0] }}
+      run_once: true
+      notify: 
+        - stop tomcat1
+
+    - name: sleep wait
+      local_action: shell /bin/sleep 30
+      run_once: true
+
+    - name: deploy showms code to remote stat2
+      local_action: shell '/opt/deploy/server_ms.sh' {{ project_name[0] }} {{ host_ip[1] }}
+      run_once: true
+
+    - name: deploy showms code to remote stat2
+      local_action: shell '/opt/deploy/server_ms.sh' {{ project_name[1] }} {{ host_ip[1] }}
+      run_once: true
+      notify: 
+        - stop tomcat2
+
+  handlers:
+    - name: stop tomcat1
+      shell: /opt/tomcat/bin/stop_tomcat.sh
+      delegate_to: 10.136.56.89
+    - name: stop tomcat2
+      shell: /opt/tomcat/bin/stop_tomcat.sh
+      delegate_to: 10.136.11.159

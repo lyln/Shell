@@ -1,0 +1,63 @@
+---
+- hosts: mt-db
+  vars: 
+    mysql_version: mysql-5.6.28-linux-glibc2.5-x86_64.tar.gz
+    mysql_path: mysql-5.6.28-linux-glibc2.5-x86_64
+    datadir: /data/mysql/
+  tasks:
+  - name: update apt
+    apt: update_cache=yes
+  - name: install library
+    apt: pkg={{ item }} state=latest force=yes
+    with_items:
+      - libaio1
+  - name: add mysql group
+    group: name=mysql state=present
+
+  - name: add mysql user
+    user: name=mysql shell=/bin/false system=yes group=mysql createhome=no
+
+  - name: copy mysql-VERSION-OS.tar.gz to remote
+    copy: src=/data/soft/{{ mysql_version }} dest=/tmp/{{ mysql_version }}
+
+  - name: untar mysql-VERSION-OS.tar.gz
+    command: tar -zxf /tmp/{{ mysql_version }} -C /usr/local/ 
+
+  - name: add link
+    file: src=/usr/local/{{ mysql_path }} path=/usr/local/mysql state=link
+  
+  - name: make sure /usr/local/mysql own and group
+    file: path=/usr/local/{{ mysql_path }} owner=mysql group=mysql state=directory
+
+  - name: make sure /etc/mysql/
+    file: dest=/etc/mysql state=directory
+
+  - name: copy my.cnf to /etc/mysql/my.cnf
+    copy: src=templates/my.cnf dest=/etc/mysql/my.cnf
+
+  - name: mysql_install_db
+    shell: scripts/mysql_install_db --user=mysql chdir=/usr/local/mysql
+
+  - name: modify mysql directory owner
+    file: path=/usr/local/{{ mysql_path }} owner=root state=directory
+
+  - name: modify datadir directory owner
+    file: path={{ datadir }} owner=mysql state=directory
+
+  - name: cleaning up source files
+    command: rm -rf /tmp/{{ mysql_version }}
+
+  - name: copy porfile to /etc/profile
+    copy: src=templates/profile dest=/etc/profile
+
+  - name: source /etc/profile
+    shell: . /etc/profile
+
+#  - name: start mysql
+#    command: /usr/local/mysql/bin/mysqld_multi start 1
+
+#  - name: show mysql status
+#    command: /usr/local/mysql/bin/mysqld_multi report 
+
+#  - name: add manager DB user for shutdown
+#    mysql_user: name=multi_admin password=admin123 host=localhost priv=*.*:SHUTDOWN  state=present
