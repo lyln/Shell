@@ -6,7 +6,7 @@ RELOAD和LOCK TABLES权限为了执行FLUSH TABLES WITH READ LOCK
 REPLICATION CLIENT为了获取binary log 位置
 CREATE TABLESPACE权限为了导入表，用户表级别的恢复
 SUPER权限在slave环境下备份用来启动和关闭slave线程
-mysql> CREATE USER 'bkpuser'@'localhost' IDENTIFIED BY 's3cret';
+mysql> CREATE USER 'bkpuser'@'localhost' IDENTIFIED BY '123456';
 mysql> GRANT RELOAD, LOCK TABLES, PROCESS, REPLICATION CLIENT ON *.* TO
        'bkpuser'@'localhost';
 mysql> FLUSH PRIVILEGES;
