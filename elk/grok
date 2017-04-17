@@ -31,3 +31,9 @@ TOTAL_USER %{ANYWORD}\[%{TIMESTAMP:log_timestamp}\]%{ANYWORD} \[%{NOTSPACE:exec_
 
 STREAMKS %{ANYWORD}\[%{TIMESTAMP:log_timestamp}\]%{ANYWORD} \[%{NOTSPACE:exec_id}\] \[%{NOTSPACE:info_from}\] \| Stream Status: \|%{ANYWORD}{\\\"userId\\\":%{ID:userId},\\\"deviceId\\\":\\\"%{MYWORD:deviceId}\\\",\\\"uuid\\\":\\\"%{ANYWORD:uuid}\\\",%{ANYWORD}\\\"version\\\":\\\"%{ANYWORD:version}\\\",\\\"channel\\\":\\\"%{ANYWORD:channel}\\\",\\\"message\\\":\\\"StreamStatus \[type=%{MYWORD:stream_type},url=%{URL:url},roomID=%{ID:room_id},isStream=%{MYWORD:is_stream},error=%{ANYWORD:error},startTime=%{INT:start_time},nettype=%{ANYWORD:nettype},snapoff=%{INT:snapoff},snapoffTime=%{INT:snapoff_time},timedelay=%{INT:timedelay}]\\\"} \| %{IP:IpFromStream}
 STREAMGS %{ANYWORD}\[%{TIMESTAMP:log_timestamp}\]%{ANYWORD} \[%{NOTSPACE:exec_id}\] \[%{NOTSPACE:info_from}\] \| Stream Status: \|%{ANYWORD}{\\\"userId\\\":%{ID:userId},\\\"deviceId\\\":\\\"%{MYWORD:deviceId}\\\",\\\"uuid\\\":\\\"%{ANYWORD:uuid}\\\",%{ANYWORD}\\\"version\\\":\\\"%{ANYWORD:version}\\\",\\\"channel\\\":\\\"%{ANYWORD:channel}\\\",\\\"message\\\":\\\"StreamStatus \[type=%{MYWORD:stream_type},url=%{URL:url}%{ANYWORD},roomID=%{ID:room_id},isStream=%{MYWORD:is_stream},error=%{ANYWORD:error},startTime=%{INT:start_time},nettype=%{ANYWORD:nettype},snapoff=%{INT:snapoff},snapoffTime=%{INT:snapoff_time},timedelay=%{INT:timedelay}]\\\"} \| %{IP:IpFromStream}
+
+
+ACCESSV2 \[%{TIMESTAMP:log_time}\] \[%{MYWORD:log_level}\] %{ANYWORD} .+ REQUEST:%{ANYWORD:req_url}\|%{IP:req_ip}\|%{ANYWORD:req_access}\|%{ANYWORD:req_params}\|%{ANYWORD:req_method}\|%{INT:req_time}%{ANYWORD}
+#ACCESS_RESPONSEV2 \[%{TIMESTAMP:log_time}\] \[%{MYWORD:log_level}\] %{ANYWORD} .+ RESPONSE:%{ANYWORD:resonse_access}
+
+STREAMV2 \[%{TIMESTAMP:log_time}\] \[%{MYWORD:log_level}\] %{ANYWORD} \| %{ANYWORD:stream_status} \| %{IP:stream_ip}
